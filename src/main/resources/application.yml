@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ai-customer-service
+  config:
+    import: optional:file:./.env[.properties]
+  datasource:
+    url: jdbc:h2:mem:customer_service;DB_CLOSE_DELAY=-1;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+
+app:
+  ai:
+    base-url: ${AI_BASE_URL:https://api.deepseek.com}
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:deepseek-chat}
+    timeout-seconds: ${AI_TIMEOUT_SECONDS:90}
+  embedding:
+    model-path: classpath:/onnx/model_quantized.onnx
+    tokenizer-path: classpath:/onnx/tokenizer.json
+    max-length: 512
+  kb:
+    chunk-size: 300
+    chunk-overlap: 50
+    top-k: 4
+    min-score: 0.30
+  agent:
+    state-dir: ${AGENT_STATE_DIR:./data/agent-state}
+    max-iters: 8
+
+logging:
+  level:
+    root: INFO
+    com.example.cs: INFO
+    io.agentscope: INFO

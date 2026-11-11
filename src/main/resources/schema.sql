@@ -1,0 +1,46 @@
+DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS refunds;
+DROP TABLE IF EXISTS logistics;
+DROP TABLE IF EXISTS orders;
+
+CREATE TABLE orders (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_no VARCHAR(64) NOT NULL UNIQUE,
+    user_id VARCHAR(64) NOT NULL,
+    product_name VARCHAR(255) NOT NULL,
+    amount DECIMAL(12, 2) NOT NULL,
+    status VARCHAR(32) NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE logistics (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_no VARCHAR(64) NOT NULL UNIQUE,
+    carrier VARCHAR(64) NOT NULL,
+    tracking_no VARCHAR(64) NOT NULL,
+    status VARCHAR(64) NOT NULL,
+    detail VARCHAR(1000) NOT NULL,
+    updated_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE refunds (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_no VARCHAR(64) NOT NULL,
+    user_id VARCHAR(64) NOT NULL,
+    amount DECIMAL(12, 2) NOT NULL,
+    status VARCHAR(32) NOT NULL,
+    reason VARCHAR(255) NOT NULL,
+    applied_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE tickets (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ticket_no VARCHAR(64) NOT NULL UNIQUE,
+    user_id VARCHAR(64) NOT NULL,
+    session_id VARCHAR(64) NOT NULL,
+    reason VARCHAR(255) NOT NULL,
+    summary VARCHAR(1000) NOT NULL,
+    status VARCHAR(32) NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
