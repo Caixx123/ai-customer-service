@@ -92,7 +92,7 @@ cp .env.example .env
 mvn spring-boot:run
 ```
 
-打开 <http://localhost:8080>。
+打开 <http://localhost:8082>。
 
 也可以打包运行：
 
